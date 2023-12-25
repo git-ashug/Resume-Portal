@@ -1,0 +1,1 @@
+insert into portal_user(id,user_name,password,is_active) values(1,'user1','user1','true');

@@ -4,9 +4,9 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.resume.portal.models.User;
+import com.resume.portal.models.PortalUser;
 
-public interface UserRepository extends JpaRepository<User, Integer>{
+public interface UserRepository extends JpaRepository<PortalUser, Integer>{
 
-	Optional<User> findByUserName(String userName);
+	Optional<PortalUser> findByUserName(String userName);
 }

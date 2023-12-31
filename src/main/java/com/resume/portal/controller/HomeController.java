@@ -65,6 +65,9 @@ public class HomeController {
 		userProfile.setLastName("Gupta");
 		userProfile.setSummary("An IT Learner");
 		userProfile.setTheme(1);
+		userProfile.setEmail("xyz@gmail.com");
+		userProfile.setPhone("22-12-5467585858");
+		userProfile.setDesignation("Software Engineer");
 		
 		UserJob userJob1 = new UserJob();
 //		userJob1.setId(1);

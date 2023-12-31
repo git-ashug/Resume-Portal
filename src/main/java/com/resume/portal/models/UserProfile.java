@@ -24,6 +24,7 @@ public class UserProfile {
 	private String lastName;
 	private String email;
 	private String phone;
+	private String designation;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "job_id")
@@ -76,6 +77,12 @@ public class UserProfile {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	public String getDesignation() {
+		return designation;
+	}
+	public void setDesignation(String designation) {
+		this.designation = designation;
 	}
 	public List<UserJob> getJobs() {
 		return jobs;

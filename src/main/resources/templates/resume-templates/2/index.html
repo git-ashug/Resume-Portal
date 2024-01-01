@@ -45,10 +45,9 @@
                         <td class="title"><span th:text="${job.designation}">Designation</span>, <span class = "company" th:text="${job.company}">Company Name.</span></td>
                         <td class="duration"><span th:text="${job.formattedStartDate}">Start Date</span> - <span th:text="${job.currentJob} ? 'Present' : ${job.formattedEndDate}">PRESENT</span></td>
                     </tr>
-                    <tr>
+                    <tr th:each="responsibility : ${job.responsibilities}">
                         <td colspan=2 class="description">
-                            &raquo; Finding vulnerabilities in client&#39;s softwares and websites.
-                            <br>&raquo; 0day research, pentests, etc.
+                            &raquo; <span th:text="${responsibility}"></span>
                         </td>
                     </tr>
                 </table>

@@ -64,7 +64,7 @@ public class HomeController {
 		userProfile.setFirstName("Ashutosh");
 		userProfile.setLastName("Gupta");
 		userProfile.setSummary("An IT Learner");
-		userProfile.setTheme(2);
+		userProfile.setTheme(1);
 		userProfile.setEmail("xyz@gmail.com");
 		userProfile.setPhone("22-12-5467585858");
 		userProfile.setDesignation("Software Engineer");
@@ -75,6 +75,8 @@ public class HomeController {
 		userJob1.setDesignation("Software Engineer 1");
 		userJob1.setStartDate(LocalDate.of(2021, 06, 14));
 		userJob1.setEndDate(LocalDate.of(2023, 06, 14));
+		userJob1.getResponsibilities().add("Feature development and prod issue fix");
+		userJob1.getResponsibilities().add("Holding brown bag sessions for team mates");
 		UserJob userJob2 = new UserJob();
 //		userJob2.setId(2);
 		userJob2.setCompany("Google");
@@ -82,6 +84,8 @@ public class HomeController {
 		userJob2.setStartDate(LocalDate.of(2023, 06, 15));
 		userJob2.setEndDate(LocalDate.of(2040, 06, 14));
 		userJob2.setCurrentJob(true);
+		userJob2.getResponsibilities().add("Feature development and production issue fix");
+		userJob2.getResponsibilities().add("Holding brown bag sessions for team mates and juniors");
 		userProfile.setJobs(List.of(userJob1,userJob2));
 		
 		userProfileRepository.save(userProfile);

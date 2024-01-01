@@ -40,56 +40,15 @@
         	</div>
             <div class="experience">
                 <h1>Experience</h1>
-                <table>
+                <table th:each="job : ${userProfile.jobs}">
                     <tr>
-                        <td class="title">Security Engineer, <a href="//flatt.tech">Flatt Security Inc.</a><br><span class="elapsed">Tokyo, Japan</span></td>
-                        <td class="duration">May 2020 - PRESENT<span class="elapsed"><br>1y 8 months</span></td>
+                        <td class="title"><span th:text="${job.designation}">Designation</span>, <span class = "company" th:text="${job.company}">Company Name.</span></td>
+                        <td class="duration"><span th:text="${job.formattedStartDate}">Start Date</span> - <span th:text="${job.currentJob} ? 'Present' : ${job.formattedEndDate}">PRESENT</span></td>
                     </tr>
                     <tr>
                         <td colspan=2 class="description">
                             &raquo; Finding vulnerabilities in client&#39;s softwares and websites.
                             <br>&raquo; 0day research, pentests, etc.
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td class="title">Security Engineer, <a href="//linecorp.com">LINE Corporation</a><br><span class="elapsed">Tokyo, Japan</span></td>
-                        <td class="duration">Feb 2019 - Apr 2020<span class="elapsed"><br>1y 3 months</span></td>
-                    </tr>
-                    <tr>
-                        <td colspan=2 class="description">
-                            &raquo; Mainly focused on finding vulnerabilities in LINE and its affiliates' products.
-                            <br>&raquo; Developed automated security analysis tools and tools for detecting potential risks.
-                            <br>&raquo; Security consulting, Reviewing bugbounty reports, recruitment support, etc.
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td class="title">Security Researcher, <a href="//se.works">SEWorks Inc.</a><br><span class="elapsed">Seoul, South Korea</span></td>
-                        <td class="duration">June 2014 - Nov 2018<span class="elapsed"><br>4y 5 months</span></td>
-                    </tr>
-                    <tr>
-                        <td colspan=2 class="description">
-                            &raquo; Focused mainly on core server management and backend service development.
-                            <br> &raquo; Developed core products, including product maintanence. (Used python, GoLang+Redis, PHP, Java, etc.)
-                            <br> &raquo; Frequently performed vulnerability checks and penetration tests on flagship products.
-                            <br> &raquo; Focused on security researches for future developments.
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td class="title">Signaller, <a href="https://www.army.mil.kr/webapp/user/indexMain.do?siteId=english">ROK Army</a><br><span class="elapsed">Paju, South Korea</span></td>
-                        <td class="duration">Nov 2016 - Aug 2018<span class="elapsed"><br>1y 8 months</span></td>
-                    </tr>
-                    <tr>
-                        <td colspan=2 class="description">
-                            &raquo; Discharged as Sergeant. Received many awards while working in the army.
-                            <br>&raquo; Maintained internal systems, managed and monitored security firewalls.
-                            <br>&raquo; Developed an application which automatically checks security status and prints out the report on every boot.
-                            <br>&raquo; Developed a pentest software to increase awareness on side-effects of using smartphones in the army.
                         </td>
                     </tr>
                 </table>

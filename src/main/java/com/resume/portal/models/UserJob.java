@@ -1,7 +1,10 @@
 package com.resume.portal.models;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +20,10 @@ public class UserJob {
 	private String designation;
 	private LocalDate startDate;
 	private LocalDate endDate;
+	private Boolean currentJob;
+	@ElementCollection(targetClass = String.class)
+	private List<String> responsibilities;
+	
 	public int getId() {
 		return id;
 	}
@@ -46,5 +53,25 @@ public class UserJob {
 	}
 	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
+	}
+	public Boolean getCurrentJob() {
+		return currentJob;
+	}
+	public void setCurrentJob(Boolean currentJob) {
+		this.currentJob = currentJob;
+	}
+	public List<String> getResponsibilities() {
+		return responsibilities;
+	}
+	public void setResponsibilities(List<String> responsibilities) {
+		this.responsibilities = responsibilities;
+	}
+	
+	public String getFormattedStartDate() {
+		return startDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
+	}
+	
+	public String getFormattedEndDate() {
+		return endDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
 	}
 }

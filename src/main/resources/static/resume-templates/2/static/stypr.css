@@ -172,6 +172,10 @@ header .neck {
     font-size: 13pt;
 }
 
+.container table .title .company{
+    color: #999;
+}
+
 .container table .duration {
     font-size: 11pt;
     font-weight: 300;

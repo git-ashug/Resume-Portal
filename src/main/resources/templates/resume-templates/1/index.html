@@ -16,7 +16,7 @@
         #pic { float: right; margin: -30px 0 0 0; }
         h1 { margin: 0 0 16px 0; padding: 0 0 16px 0; font-size: 42px; font-weight: bold; letter-spacing: -2px; border-bottom: 1px solid #999; }
         h2 { font-size: 20px; margin: 0 0 6px 0; position: relative; }
-        h2 span { position: absolute; bottom: 0; right: 0; font-style: italic; font-family: Georgia, Serif; font-size: 16px; color: #999; font-weight: normal; }
+        /* h2 span { position: absolute; bottom: 0; right: 0; font-style: italic; font-family: Georgia, Serif; font-size: 16px; color: #999; font-weight: normal; } */
         p { margin: 0 0 16px 0; }
         a { color: #999; text-decoration: none; border-bottom: 1px dotted #999; }
         a:hover { border-bottom-style: solid; color: black; }
@@ -26,6 +26,10 @@
         dt { font-style: italic; font-weight: bold; font-size: 18px; text-align: right; padding: 0 26px 0 0; width: 150px; float: left; height: 100px; border-right: 1px solid #999;  }
         dd { width: 600px; float: right; }
         dd.clear { float: none; margin: 0; height: 15px; }
+        .flex-parent-element { display: flex; width: 105%;} /* TODO: width: 105%; */
+		.flex-child-element { flex: 1;}
+		.flex-child-element span{ bottom: 0; right: 0; font-style: italic; font-family: Georgia, Serif; font-size: 16px; color: #999; font-weight: normal;}
+
      </style>
 </head>
 
@@ -60,6 +64,36 @@
         <div class="clear"></div>
         
         <dl>
+        
+        	<dd class="clear"></dd>
+            
+            <dt>Experience</dt>
+            <dd th:each="job : ${userProfile.jobs}">
+				<!-- <h2>
+				<span class="titleContainer" th:text="${job.company}">Company</span>
+				<span class="positionContainer">
+					<span th:text="${job.designation}">Designation</span>
+					<span th:text="${job.formattedStartDate}">Start Date</span>
+					<span th:text="${job.formattedEndDate}">End Date</span>
+				</span></h2> -->
+				<div class = "flex-parent-element">
+					<div class="flex-child-element">
+					<h2 th:text="${job.company}"> Company </h2>
+					</div>
+					<div class="flex-child-element">
+					<span th:text="${job.designation}+ ' | '">Designation</span>
+					<span th:text="${job.formattedStartDate}+ ' - '">Start Date</span>
+					<span th:text="${job.currentJob} ? 'Present' : ${job.formattedEndDate}">End Date</span>
+					</div>
+				</div>
+                <ul>
+                    <li>Inspired and won highest peasant death competition among servants</li>
+                    <li>Helped coordinate managers to grow cult following</li>
+                    <li>Provided untimely deaths to all who opposed</li>
+                </ul> 
+            </dd>
+            
+            
             <dd class="clear"></dd>
             
             <dt>Education</dt>
@@ -80,24 +114,6 @@
                 <p>Microsoft productivity software (Word, Excel, etc), Adobe Creative Suite, Windows</p>
             </dd>
             
-            <dd class="clear"></dd>
-            
-            <dt>Experience</dt>
-            <dd>
-                <h2>Doomsday Cult <span>Leader/Overlord - Baton Rogue, LA - 1926-2010</span></h2>
-                <ul>
-                    <li>Inspired and won highest peasant death competition among servants</li>
-                    <li>Helped coordinate managers to grow cult following</li>
-                    <li>Provided untimely deaths to all who opposed</li>
-                </ul>
-                
-                <h2>The Watering Hole <span>Bartender/Server - Milwaukee, WI - 2009</span></h2>
-                <ul>
-                    <li>Worked on grass-roots promotional campaigns</li>
-                    <li>Reduced theft and property damage percentages</li>
-                    <li>Janitorial work, Laundry</li>
-                </ul> 
-            </dd>
             
             <dd class="clear"></dd>
             

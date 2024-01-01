@@ -64,7 +64,7 @@ public class HomeController {
 		userProfile.setFirstName("Ashutosh");
 		userProfile.setLastName("Gupta");
 		userProfile.setSummary("An IT Learner");
-		userProfile.setTheme(1);
+		userProfile.setTheme(2);
 		userProfile.setEmail("xyz@gmail.com");
 		userProfile.setPhone("22-12-5467585858");
 		userProfile.setDesignation("Software Engineer");
@@ -80,7 +80,8 @@ public class HomeController {
 		userJob2.setCompany("Google");
 		userJob2.setDesignation("Software Engineer 2");
 		userJob2.setStartDate(LocalDate.of(2023, 06, 15));
-		userJob2.setEndDate(LocalDate.of(2040, 06, 14));	
+		userJob2.setEndDate(LocalDate.of(2040, 06, 14));
+		userJob2.setCurrentJob(true);
 		userProfile.setJobs(List.of(userJob1,userJob2));
 		
 		userProfileRepository.save(userProfile);

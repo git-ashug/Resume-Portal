@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.resume.portal.models.UserEducation;
 import com.resume.portal.models.UserJob;
 import com.resume.portal.models.UserProfile;
 import com.resume.portal.repository.UserProfileRepository;
@@ -87,6 +88,18 @@ public class HomeController {
 		userJob2.getResponsibilities().add("Feature development and production issue fix");
 		userJob2.getResponsibilities().add("Holding brown bag sessions for team mates and juniors");
 		userProfile.setJobs(List.of(userJob1,userJob2));
+		
+		UserEducation userEd1 = new UserEducation();
+		userEd1.setCollegeName("University of Toronto");
+		userEd1.setSummary("Currently studying as an undergraduate, and is going to acquire a Bachelor’s degree at some point.Currently on a long leave for jobs.");
+		userEd1.setStartDate(LocalDate.of(2019, 06, 15));
+		userEd1.setEndDate(LocalDate.of(2021, 06, 14));
+		UserEducation userEd2 = new UserEducation();
+		userEd2.setCollegeName("School of Science & Technology");
+		userEd2.setSummary("Acquired International Baccalaureate Diploma for Secondary School.Studied in India");
+		userEd2.setStartDate(LocalDate.of(2017, 06, 15));
+		userEd2.setEndDate(LocalDate.of(2019, 06, 14));
+		userProfile.setEducations(List.of(userEd1,userEd2));
 		
 		userProfileRepository.save(userProfile);
 		

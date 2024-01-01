@@ -30,6 +30,10 @@ public class UserProfile {
 	@JoinColumn(name = "job_id")
 	private List<UserJob> jobs = new ArrayList<>();
 	
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "education_id")
+	private List<UserEducation> educations = new ArrayList<>();
+	
 	public int getId() {
 		return id;
 	}
@@ -89,6 +93,12 @@ public class UserProfile {
 	}
 	public void setJobs(List<UserJob> jobs) {
 		this.jobs = jobs;
+	}
+	public List<UserEducation> getEducations() {
+		return educations;
+	}
+	public void setEducations(List<UserEducation> educations) {
+		this.educations = educations;
 	}
 	
 }

@@ -7,7 +7,7 @@
     <meta name="google" content="notranslate">
     <!-- <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon-precomposed" href="favicon.ico"> -->
-    <title>harold.kim</title>
+    <title>Resume 2</title>
     <meta property="og:title" content="stypr.">
     <meta property="og:url" content="https://stypr.com/">
     <!-- <meta property="og:image" content="https://stypr.com/logo.png"> -->
@@ -55,27 +55,14 @@
             <hr>
             <div class="education">
                 <h1>Education</h1>
-                <table>
+                <table th:each="education : ${userProfile.educations}">
                     <!-- http://individual.utoronto.ca/stypr/ my university workspace. But there should be a way to get this URL from somewhere else. -->
                     <tr>
-                        <td class="title">Undergraduate Student, University of Toronto</td>
-                        <td class="duration">Sept. 2014 - June 2015<span class="elapsed"><br>9 months</span></td>
+                        <td class="title"><span class = "college" th:text="${education.collegeName}">College Name.</span></td>
+                        <td class="duration"><span th:text="${education.formattedStartDate}">Start Date</span> - <span th:text="${education.formattedEndDate}">End Date</span></td>
                     </tr>
                     <tr>
-                        <td colspan=2 class="description">&raquo; Currently studying as an undergraduate, and is going to acquire a Bachelor’s degree at some point.
-                        <br>&raquo; Currently on a long leave for jobs.
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td class="title">International Baccalaureate Diploma</td>
-                        <td class="duration">Sept. 2012 - June 2014<span class="elapsed"><br>1y 9 months</span></td>
-                    </tr>
-                    <tr>
-                        <td colspan=2 class="description">
-                        &raquo; Acquired International Baccalaureate Diploma for Secondary School.
-                        <br>&raquo; Studied in India<br>
+                        <td colspan=2 class="description">&raquo; <span th:text="${education.summary}">Education Description/Summary</span>
                         </td>
                     </tr>
                 </table>

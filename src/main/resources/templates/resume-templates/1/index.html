@@ -6,7 +6,7 @@
 <head>
      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-     <title>One Page Resume</title>
+     <title>Resume 1</title>
 
      <style type="text/css">
         * { margin: 0; padding: 0; }
@@ -28,8 +28,7 @@
         dd.clear { float: none; margin: 0; height: 15px; }
         .flex-parent-element { display: flex; width: 105%;} /* TODO: width: 105%; */
 		.flex-child-element { flex: 1;}
-		.flex-child-element span{ bottom: 0; right: 0; font-style: italic; font-family: Georgia, Serif; font-size: 16px; color: #999; font-weight: normal;}
-
+		.flex-child-element-2 { bottom: 0; right: 0; font-style: italic; font-family: Georgia, Serif; font-size: 16px; color: #999; font-weight: normal; text-align: right;}
      </style>
 </head>
 
@@ -69,18 +68,11 @@
             
             <dt>Experience</dt>
             <dd th:each="job : ${userProfile.jobs}">
-				<!-- <h2>
-				<span class="titleContainer" th:text="${job.company}">Company</span>
-				<span class="positionContainer">
-					<span th:text="${job.designation}">Designation</span>
-					<span th:text="${job.formattedStartDate}">Start Date</span>
-					<span th:text="${job.formattedEndDate}">End Date</span>
-				</span></h2> -->
 				<div class = "flex-parent-element">
-					<div class="flex-child-element">
+					<div class="flex-child-element flex-child-element-1">
 					<h2 th:text="${job.company}"> Company </h2>
 					</div>
-					<div class="flex-child-element">
+					<div class="flex-child-element flex-child-element-2">
 					<span th:text="${job.designation}+ ' | '">Designation</span>
 					<span th:text="${job.formattedStartDate}+ ' - '">Start Date</span>
 					<span th:text="${job.currentJob} ? 'Present' : ${job.formattedEndDate}">End Date</span>
@@ -95,11 +87,24 @@
             <dd class="clear"></dd>
             
             <dt>Education</dt>
-            <dd>
+            <!-- <dd>
                 <h2>Withering Madness University - Planet Vhoorl</h2>
                 <p><strong>Major:</strong> Public Relations<br />
                    <strong>Minor:</strong> Scale Tending</p>
+            </dd> -->
+            <dd th:each="education : ${userProfile.educations}">
+				<div class = "flex-parent-element">
+					<div class="flex-child-element flex-child-element-1">
+					<h2 th:text="${education.collegeName}"> College Name. </h2>
+					</div>
+					<div class="flex-child-element flex-child-element-2">
+					<span th:text="${education.formattedStartDate}+ ' - '">Start Date</span>
+					<span th:text="${education.formattedEndDate}">End Date</span>
+					</div>
+				</div>
+                <p th:text="${education.summary}">Education Description/Summary</p>
             </dd>
+            
             
             <dd class="clear"></dd>
             

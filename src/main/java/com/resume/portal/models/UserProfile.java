@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,6 +34,9 @@ public class UserProfile {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "education_id")
 	private List<UserEducation> educations = new ArrayList<>();
+
+	@ElementCollection(targetClass = String.class)
+	private List<String> skills = new ArrayList<>();
 	
 	public int getId() {
 		return id;
@@ -100,5 +104,12 @@ public class UserProfile {
 	public void setEducations(List<UserEducation> educations) {
 		this.educations = educations;
 	}
+	public List<String> getSkills() {
+		return skills;
+	}
+	public void setSkills(List<String> skills) {
+		this.skills = skills;
+	}
+	
 	
 }

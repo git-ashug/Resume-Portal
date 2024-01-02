@@ -101,6 +101,8 @@ public class HomeController {
 		userEd2.setEndDate(LocalDate.of(2019, 06, 14));
 		userProfile.setEducations(List.of(userEd1,userEd2));
 		
+		userProfile.setSkills(List.of("Java", "C" , "C++" , "Spring", "Springboot" , "Backend Development"));
+		
 		userProfileRepository.save(userProfile);
 		
 		return "profile";

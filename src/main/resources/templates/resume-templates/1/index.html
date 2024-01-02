@@ -109,24 +109,11 @@
             <dd class="clear"></dd>
             
             <dt>Skills</dt>
-            <dd>
-                <h2>Office skills</h2>
-                <p>Office and records management, database administration, event organization, customer support, travel coordination</p>
-                
-                <h2>Computer skills</h2>
-                <p>Microsoft productivity software (Word, Excel, etc), Adobe Creative Suite, Windows</p>
+            <dd th:each="skill : ${userProfile.skills}">
+                <!-- <h2>Office skills</h2> -->
+                <span th:text="${skill}"></span>
             </dd>
             
-            
-            <dd class="clear"></dd>
-            
-            <dt>Hobbies</dt>
-            <dd>World Domination, Deep Sea Diving, Murder Most Foul</dd>
-            
-            <dd class="clear"></dd>
-            
-            <dt>References</dt>
-            <dd>Available on request</dd>
             
             <dd class="clear"></dd>
         </dl>

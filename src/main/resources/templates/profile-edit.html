@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Resume</title>
+  </head>
+  <body>
+	<h1 th:text="${userProfile.userName} + '\'s Edit Profile'">Profile</h1>
+	
+	<!-- action="#" because I don't want that by default action should work, rather Thymeleaf action should work.  -->
+	<form action="#" th:action= "@{/edit}" th:object = "${userProfile}" method="post">
+	<!-- userProfile acts as a container/object. While we come from GET /edit, userProfile will be populated
+	from that request and will be displayed on form. When we make changes to these values, this object will contain those changes
+	and will be used again when we POST /edit and act as payload-->
+	<!-- The context of this form will be  userProfile. So its property can directly be accessed using *{property} rather than always using ${userProfile.property}-->
+	
+	<p>First Name: <input type="text" th:field="*{firstName}"></p>
+	<p>Last Name: <input type="text" th:field="*{lastName}"></p>
+	<p>Email: <input type="text" th:field="*{email}"></p>
+	<p>Phone No.: <input type="text" th:field="*{phone}"></p>
+	
+	</form>
+  </body>
+</html>

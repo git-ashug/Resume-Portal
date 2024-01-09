@@ -1,5 +1,6 @@
 package com.resume.portal.controller;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.resume.portal.models.UserEducation;
 import com.resume.portal.models.UserJob;
@@ -30,9 +32,21 @@ public class HomeController {
 		return "Hello";
 	}
 	
+	//TO DO: Move this repetitive logic of fetching user from DB to service layer and then inject bean of service layer
 	@GetMapping("/edit")
-	public String edit() {
-		return "Edit Page";
+	public String edit(Principal principal, Model model) {	//Principal object fiven by java.security that contains info about currently logged in user
+		String userName = principal.getName();
+		Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userName);
+		userProfileOptional.orElseThrow(()-> new RuntimeException("Username not found: "+userName));	// should not throw UsernameNotFoundException as this exception is related to Spring Security. For this case, we should have our own custom exception.
+		UserProfile userProfile = userProfileOptional.get();
+		model.addAttribute("userProfile",userProfile);
+		return "profile-edit";
+	}
+	
+	@PostMapping("/edit")
+	public String postEdit(Principal principal, Model model) {
+		//save the model object obtained by edit form here
+		return "redirect:/view/"+ principal.getName();
 	}
 	
 	@GetMapping("/test1")
@@ -65,7 +79,7 @@ public class HomeController {
 		userProfile.setFirstName("Ashutosh");
 		userProfile.setLastName("Gupta");
 		userProfile.setSummary("An IT Learner");
-		userProfile.setTheme(1);
+		userProfile.setTheme(2);
 		userProfile.setEmail("xyz@gmail.com");
 		userProfile.setPhone("22-12-5467585858");
 		userProfile.setDesignation("Software Engineer");

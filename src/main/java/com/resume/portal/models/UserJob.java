@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +21,9 @@ public class UserJob {
 	private int id;
 	private String company;
 	private String designation;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate startDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate endDate;
 	private Boolean currentJob;
 	@ElementCollection(targetClass = String.class)

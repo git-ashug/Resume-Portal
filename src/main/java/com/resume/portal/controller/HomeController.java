@@ -34,7 +34,7 @@ public class HomeController {
 	
 	//TO DO: Move this repetitive logic of fetching user from DB to service layer and then inject bean of service layer
 	@GetMapping("/edit")
-	public String edit(Principal principal, Model model) {	//Principal object fiven by java.security that contains info about currently logged in user
+	public String edit(Principal principal, Model model) {	//Principal object given by java.security that contains info about currently logged in user
 		String userName = principal.getName();
 		Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userName);
 		userProfileOptional.orElseThrow(()-> new RuntimeException("Username not found: "+userName));	// should not throw UsernameNotFoundException as this exception is related to Spring Security. For this case, we should have our own custom exception.

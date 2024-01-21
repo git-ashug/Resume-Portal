@@ -3,6 +3,8 @@ package com.resume.portal.models;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,7 +17,9 @@ public class UserEducation {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String collegeName;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate startDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate endDate;
 	private String summary;
 	

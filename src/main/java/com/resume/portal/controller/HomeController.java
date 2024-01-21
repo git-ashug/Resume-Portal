@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -44,9 +45,16 @@ public class HomeController {
 	}
 	
 	@PostMapping("/edit")
-	public String postEdit(Principal principal, Model model) {
+	public String postEdit(Principal principal, @ModelAttribute UserProfile userProfile) {
 		//save the model object obtained by edit form here
-		return "redirect:/view/"+ principal.getName();
+		String userName = principal.getName();
+		Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userName);
+		userProfileOptional.orElseThrow(()-> new RuntimeException("Username not found: "+userName));
+		UserProfile savedUserProfile = userProfileOptional.get();
+		userProfile.setId(savedUserProfile.getId());  // as we are not exposing ID and username in the form as we don't want users to changes their ID/userName, we need to first find IS and userName and then use it while saving so that it gets updated in DB and should not create a new record.
+		userProfile.setUserName(userName);
+		userProfileRepository.save(userProfile);
+		return "redirect:/view/"+ userName;
 	}
 	
 	@GetMapping("/test1")

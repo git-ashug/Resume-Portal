@@ -17,6 +17,12 @@
 	and will be used again when we POST /edit and act as payload-->
 	<!-- The context of this form will be  userProfile. So its property can directly be accessed using *{property} rather than always using ${userProfile.property}-->
 	<div class="container">
+	
+	<label class="form-label">Select the theme</label>
+	<select class="form-select" th:field="*{theme}">
+    <option th:each="i : ${#numbers.sequence(1, 2)}" th:value="${i}" th:text="'Theme '+${i}"></option>
+	</select>
+	
 	<h3>Profile Summary:</h3>
 		<div class="mb-3">
 		  <label class="form-label">First Name:</label>
@@ -40,7 +46,7 @@
 		</div>
 		<div class="mb-3">
 		  <label class="form-label">Summary:</label>
-		  <input type="text" class="form-control" th:field="*{summary}">
+		  <textarea class="form-control" th:field="*{summary}"></textarea>
 		</div>
 		<br>
 		<h3>Experience:</h3>
@@ -77,7 +83,8 @@
 				<td><input type="text" class="form-control" th:field="*{educations[__${status.index}__].collegeName}"></td>
 				<td><input type="date" class="form-control" th:field="*{educations[__${status.index}__].startDate}"></td>
 				<td><input type="date" class="form-control" th:field="*{educations[__${status.index}__].endDate}"></td>
-				<td><input type="text" class="form-control" th:field="*{educations[__${status.index}__].summary}"></td>
+				<!-- <td><input type="text" class="form-control" th:field="*{educations[__${status.index}__].summary}"></td> -->
+				<td><textarea class="form-control" th:field="*{educations[__${status.index}__].summary}" rows="2"></textarea></td>
 			</tr>
 		</table>
 		

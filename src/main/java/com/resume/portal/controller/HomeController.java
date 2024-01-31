@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.resume.portal.models.UserEducation;
 import com.resume.portal.models.UserJob;
@@ -35,13 +36,41 @@ public class HomeController {
 	
 	//TO DO: Move this repetitive logic of fetching user from DB to service layer and then inject bean of service layer
 	@GetMapping("/edit")
-	public String edit(Principal principal, Model model) {	//Principal object given by java.security that contains info about currently logged in user
+	public String edit(Principal principal, Model model, @RequestParam(required = false) String add) {	//Principal object given by java.security that contains info about currently logged in user
 		String userName = principal.getName();
 		Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userName);
 		userProfileOptional.orElseThrow(()-> new RuntimeException("Username not found: "+userName));	// should not throw UsernameNotFoundException as this exception is related to Spring Security. For this case, we should have our own custom exception.
 		UserProfile userProfile = userProfileOptional.get();
+//		userProfile.getJobs().add(new UserJob());
+		if("experience".equalsIgnoreCase(add)) {
+			userProfile.getJobs().add(new UserJob());
+		}else if("education".equalsIgnoreCase(add)) {
+			userProfile.getEducations().add(new UserEducation());
+		}else if("skill".equalsIgnoreCase(add)) {
+			userProfile.getSkills().add("");
+		}
 		model.addAttribute("userProfile",userProfile);
 		return "profile-edit";
+	}
+	
+	@GetMapping("/delete")
+	public String delete(Principal principal, Model model, @RequestParam String type, @RequestParam int index) {
+		String userName = principal.getName();
+		Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userName);
+		userProfileOptional.orElseThrow(()-> new RuntimeException("Username not found: "+userName));	// should not throw UsernameNotFoundException as this exception is related to Spring Security. For this case, we should have our own custom exception.
+		UserProfile userProfile = userProfileOptional.get();
+		if("experience".equalsIgnoreCase(type)) {
+			userProfile.getJobs().remove(index);
+		}else if("education".equalsIgnoreCase(type)) {
+			userProfile.getEducations().remove(index);
+		}else if("skill".equalsIgnoreCase(type)) {
+			userProfile.getSkills().remove(index);
+		}
+		
+		userProfileRepository.save(userProfile);
+		model.addAttribute("userProfile",userProfile);
+		return "profile-edit";
+		//return "redirect:/edit/" + userName;
 	}
 	
 	@PostMapping("/edit")

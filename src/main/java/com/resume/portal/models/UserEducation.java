@@ -55,10 +55,24 @@ public class UserEducation {
 	}
 	
 	public String getFormattedStartDate() {
-		return startDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
+		String startDateStr = null;
+		try {
+			startDateStr = startDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));  //if from form user adds empty education without entering date, startDate will be null and fail here. To protect, try-catch is applied.
+		} catch (Exception e) {
+			startDate = null;
+			startDateStr = "";
+		}
+		return startDateStr;
 	}
 	
 	public String getFormattedEndDate() {
-		return endDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
+		String endDateStr = null;
+		try {
+			endDateStr = endDate.format(DateTimeFormatter.ofPattern("MMM yyyy"));
+		} catch (Exception e) {
+			endDate = null;
+			endDateStr = "";
+		}
+		return endDateStr;
 	}
 }

@@ -31,7 +31,7 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String home() {
-		return "Hello";
+		return "index";
 	}
 	
 	//TO DO: Move this repetitive logic of fetching user from DB to service layer and then inject bean of service layer
@@ -98,7 +98,11 @@ public class HomeController {
 	
 	
 	@GetMapping("/view/{userName}")
-	public String view(@PathVariable String userName, Model model) {
+	public String view(@PathVariable String userName, Model model, Principal principal) {
+		if(principal != null && principal.getName() != null && principal.getName() != "") {	// if current user is logged in and is seeing his/her own profile, show them Edit Link on their profile
+			boolean currentUsersProfile = principal.getName().equalsIgnoreCase(userName);
+			model.addAttribute("currentUsersProfile",currentUsersProfile);
+		}
 		Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userName);
 		userProfileOptional.orElseThrow(()-> new RuntimeException("Username not found: "+userName));	// should not throw UsernameNotFoundException as this exception is related to Spring Security. For this case, we should have our own custom exception.
 		UserProfile userProfile = userProfileOptional.get();

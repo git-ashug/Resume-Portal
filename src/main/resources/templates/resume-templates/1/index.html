@@ -36,14 +36,19 @@
 
     <div id="page-wrap">
     
+    
         <img src="../resume-templates/1/static/images/pfp.jpg" alt="Photo of User" id="pic" />
     
         <div id="contact-info" class="vcard">
         
+        
             <!-- Microformats! -->
         
-            <h1 class="fn"><span th:text="${userProfile.firstName}">FirstName</span> <span th:text="${userProfile.lastName}">LastName</span></h1>
-        
+            <h1 class="fn">
+            <span th:text="${userProfile.firstName}">FirstName</span>
+            <span th:text="${userProfile.lastName}">LastName</span> 
+            <span><a th:if="${currentUsersProfile}" href="/edit">Edit</a></span></h1>
+        	
             <p>
             	Designation: <span class="designation" th:text="${userProfile.designation}">Designation</span><br />
                 Cell: <span class="tel" th:text="${userProfile.phone}">555-666-7777</span><br />

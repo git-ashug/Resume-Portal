@@ -17,7 +17,8 @@
 </head>
 <body>
     <header>
-        <div class="name"><span class="last" th:text="${userProfile.firstName}">Harold</span> <span class="first" th:text="${userProfile.lastName}">Kim</span></div>
+        <div class="name"><span class="last" th:text="${userProfile.firstName}">Harold</span> <span class="first" th:text="${userProfile.lastName}">Kim</span>
+        <span><a th:if="${currentUsersProfile}" href="/edit">Edit</a></span></div>
         <div class="job" th:text="${userProfile.designation}">Backend Developer &#8226; Security Researcher</div>
         <div class="info">
             <!-- Icons by W3C Creation Lab -->

@@ -67,10 +67,20 @@
 				<td><input type="date" class="form-control" th:field="*{jobs[__${status.index}__].startDate}"></td>
 				<td><input type="date" class="form-control" th:field="*{jobs[__${status.index}__].endDate}"></td>
 				<td><input type="checkbox" class="form-check-input" th:field="*{jobs[__${status.index}__].currentJob}"></td>
-				<td><a th:href="@{'./delete?type=experience&index=' + ${status.index}}">Delete</a></td>
+				<!-- <td><a th:href="@{'./delete?type=experience&index=' + ${status.index}}">Delete</a></td> -->
+				<td>
+					<!-- <form th:action="@{/edit}" th:object = "${userProfile}" method="post" style="display: inline;"> -->
+						<button type="submit" name="action" value="delete">Delete</button>
+						<input type="hidden" name="itemType" value="experience" />
+						<input type="hidden" name="index" th:value="${status.index}" />
+					<!-- </form> -->
+				</td>
 			</tr>
 		</table>
-		<p><a href="./edit?add=experience">Add Experience</a></p>
+		<!-- <p><a href="./edit?add=experience">Add Experience</a></p> -->
+		<!-- Solution to above <a> tag -->
+		<button type="submit" name="action" value="add">Add Experience</button>
+    	<input type="hidden" name="itemType" value="experience" />
 		<br>
 		
 		<h3>Education:</h3>
@@ -89,25 +99,68 @@
 				<td><input type="date" class="form-control" th:field="*{educations[__${status.index}__].endDate}"></td>
 				<!-- <td><input type="text" class="form-control" th:field="*{educations[__${status.index}__].summary}"></td> -->
 				<td><textarea class="form-control" th:field="*{educations[__${status.index}__].summary}" rows="2"></textarea></td>
-				<td><a th:href="@{'./delete?type=education&index=' + ${status.index}}">Delete</a></td>
+				<!-- <td><a th:href="@{'./delete?type=education&index=' + ${status.index}}">Delete</a></td> -->
+				<td>
+					<!-- <form th:action="@{/edit}" th:object = "${userProfile}" method="post" style="display: inline;"> -->
+						<button type="submit" name="action" value="delete">Delete</button>
+						<input type="hidden" name="itemType" value="education"></input>
+						<input type="hidden" name="index" th:value="${status.index}"></input>
+					<!-- </form> -->
+				</td>
 			</tr>
 		</table>
-		<p><a href="./edit?add=education">Add Education</a></p>
+		<!-- <p><a href="./edit?add=education">Add Education</a></p> -->
+		<!-- Solution to above <a> tag -->
+		<button type="submit" name="action" value="add">Add Education</button>
+    	<input type="hidden" name="itemType" value="education" />
 		<br>
 		
 		<h3>Skills:</h3>
 		<table>
 			<tr th:each= "skill, status : *{skills}">
 				<td><input type="text" class="form-control" th:field="*{skills[__${status.index}__]}"></td>
-				<td><a th:href="@{'./delete?type=skill&index=' + ${status.index}}">Delete</a></td>
+				<!-- <td><a th:href="@{'./delete?type=skill&index=' + ${status.index}}">Delete</a></td> -->
+				<td>
+					<!-- <form th:action="@{/edit}" th:object = "${userProfile}" method="post" style="display: inline;"> -->
+						<button type="submit" name="action" value="delete">Delete</button>
+						<input type="hidden" name="itemType" value="skill"></input>
+						<input type="hidden" name="index" th:value="${status.index}"></input>
+					<!-- </form> -->
+				</td>
 			</tr>
 		</table>
-		<p><a href="./edit?add=skill">Add Skill</a></p>
+		<!-- <p><a href="./edit?add=skill">Add Skill</a></p> -->
+		<!-- Solution to above <a> tag -->
+		<button type="submit" name="action" value="add">Add Skill</button>
+    	<input type="hidden" name="itemType" value="skill" />
 		<br>
-		
-		<input type="submit">
 	</div>
 	
+		<!-- Final Submit Button -->
+	 	<button type="submit">Submit Profile</button>
 	</form>
+	
+  
+	<!-- Separate Forms for Adding Items -->
+	
+	<!-- Form for "Add Experience" -->
+	<!-- <form th:action="@{/edit}" th:object = "${userProfile}" method="post">
+	    <button type="submit" name="action" value="add">Add Experience</button>
+	    <input type="hidden" name="itemType" value="experience" />
+	</form> -->
+	
+	<!-- Form for "Add Education" -->
+	<!-- <form th:action="@{/edit}" th:object = "${userProfile}" method="post">
+	    <button type="submit" name="action" value="add">Add Education</button>
+	    <input type="hidden" name="itemType" value="education" />
+	</form> -->
+	
+	<!-- Form for "Add Skill" -->
+	<!-- <form th:action="@{/edit}" th:object = "${userProfile}" method="post">
+	    <button type="submit" name="action" value="add">Add Skill</button>
+	    <input type="hidden" name="itemType" value="skill" />
+	</form> -->
+
+	
   </body>
 </html>

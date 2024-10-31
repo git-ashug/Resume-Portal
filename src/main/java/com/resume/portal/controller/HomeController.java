@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +21,7 @@ import com.resume.portal.repository.UserProfileRepository;
 
 //@RestController
 @Controller
+@Transactional
 public class HomeController {
 
 	private final UserProfileRepository userProfileRepository;
@@ -36,45 +38,56 @@ public class HomeController {
 	
 	//TO DO: Move this repetitive logic of fetching user from DB to service layer and then inject bean of service layer
 	@GetMapping("/edit")
-	public String edit(Principal principal, Model model, @RequestParam(required = false) String add) {	//Principal object given by java.security that contains info about currently logged in user
+	public String edit(Principal principal, Model model) {	//Principal object given by java.security that contains info about currently logged in user
 		String userName = principal.getName();
 		Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userName);
-		userProfileOptional.orElseThrow(()-> new RuntimeException("Username not found: "+userName));	// should not throw UsernameNotFoundException as this exception is related to Spring Security. For this case, we should have our own custom exception.
-		UserProfile userProfile = userProfileOptional.get();
-//		userProfile.getJobs().add(new UserJob());
-		if("experience".equalsIgnoreCase(add)) {
-			userProfile.getJobs().add(new UserJob());
-		}else if("education".equalsIgnoreCase(add)) {
-			userProfile.getEducations().add(new UserEducation());
-		}else if("skill".equalsIgnoreCase(add)) {
-			userProfile.getSkills().add("");
-		}
-		model.addAttribute("userProfile",userProfile);
-		return "profile-edit";
-	}
-	
-	@GetMapping("/delete")
-	public String delete(Principal principal, Model model, @RequestParam String type, @RequestParam int index) {
-		String userName = principal.getName();
-		Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userName);
-		userProfileOptional.orElseThrow(()-> new RuntimeException("Username not found: "+userName));	// should not throw UsernameNotFoundException as this exception is related to Spring Security. For this case, we should have our own custom exception.
-		UserProfile userProfile = userProfileOptional.get();
-		if("experience".equalsIgnoreCase(type)) {
-			userProfile.getJobs().remove(index);
-		}else if("education".equalsIgnoreCase(type)) {
-			userProfile.getEducations().remove(index);
-		}else if("skill".equalsIgnoreCase(type)) {
-			userProfile.getSkills().remove(index);
-		}
+		//userProfileOptional.orElseThrow(()-> new RuntimeException("Username not found: "+userName));	// should not throw UsernameNotFoundException as this exception is related to Spring Security. For this case, we should have our own custom exception.
+		UserProfile userProfile = null;
+			if(!userProfileOptional.isPresent()) {
+				userProfile = new UserProfile();
+				userProfile.setUserName(userName);
+			}else {
+				userProfile = userProfileOptional.get();
+			}
 		
+//		userProfile.getJobs().add(new UserJob());
+//		if("experience".equalsIgnoreCase(add)) {
+//			userProfile.getJobs().add(new UserJob());
+//		}else if("education".equalsIgnoreCase(add)) {
+//			userProfile.getEducations().add(new UserEducation());
+//		}else if("skill".equalsIgnoreCase(add)) {
+//			userProfile.getSkills().add("");
+//		}
 		userProfileRepository.save(userProfile);
 		model.addAttribute("userProfile",userProfile);
 		return "profile-edit";
-		//return "redirect:/edit/" + userName;
 	}
 	
+//	@GetMapping("/delete")
+//	public String delete(Principal principal, Model model, @RequestParam String type, @RequestParam int index) {
+//		String userName = principal.getName();
+//		Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userName);
+//		userProfileOptional.orElseThrow(()-> new RuntimeException("Username not found: "+userName));	// should not throw UsernameNotFoundException as this exception is related to Spring Security. For this case, we should have our own custom exception.
+//		UserProfile userProfile = userProfileOptional.get();
+//		if("experience".equalsIgnoreCase(type)) {
+//			userProfile.getJobs().remove(index);
+//		}else if("education".equalsIgnoreCase(type)) {
+//			userProfile.getEducations().remove(index);
+//		}else if("skill".equalsIgnoreCase(type)) {
+//			userProfile.getSkills().remove(index);
+//		}
+//		
+//		userProfileRepository.save(userProfile);
+//		model.addAttribute("userProfile",userProfile);
+//		return "profile-edit";
+//		//return "redirect:/edit/" + userName;
+//	}
+	
 	@PostMapping("/edit")
-	public String postEdit(Principal principal, @ModelAttribute UserProfile userProfile) {
+	public String postEdit(Principal principal, @ModelAttribute UserProfile userProfile,
+			@RequestParam("action") String action,
+			@RequestParam("itemType") String itemType,
+            @RequestParam(value = "index", required = false) Integer index) {
 		//save the model object obtained by edit form here
 		String userName = principal.getName();
 		Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userName);
@@ -82,9 +95,42 @@ public class HomeController {
 		UserProfile savedUserProfile = userProfileOptional.get();
 		userProfile.setId(savedUserProfile.getId());  // as we are not exposing ID and username in the form as we don't want users to changes their ID/userName, we need to first find IS and userName and then use it while saving so that it gets updated in DB and should not create a new record.
 		userProfile.setUserName(userName);
+		System.out.println("Here: action = "+ action+ " ;itemType = "+itemType+ " ;index = "+ index);
+		if("add".equals(action)) {
+			if("experience".equalsIgnoreCase(itemType)) {
+				userProfile.getJobs().add(new UserJob());
+			}else if("education".equalsIgnoreCase(itemType)) {
+				userProfile.getEducations().add(new UserEducation());
+			}else if("skill".equalsIgnoreCase(itemType)) {
+				userProfile.getSkills().add("");
+			}
+		}else if ("delete".equals(action) && index != null) {
+			System.out.println("In delete: action = "+ action);
+            if ("experience".equals(itemType)) {
+            	userProfile.getJobs().remove((int) index);
+            }else if ("education".equals(itemType)) {
+            	userProfile.getEducations().remove((int) index);
+            }else if("skill".equalsIgnoreCase(itemType)) {
+				userProfile.getSkills().remove((int) index);
+			}
+        }
 		userProfileRepository.save(userProfile);
-		return "redirect:/view/"+ userName;
+		System.out.println("Saved successfully");
+//		return "redirect:/view/"+ userName;
+		return "redirect:/edit";
 	}
+	
+	@PostMapping("/submitProfile")
+    public String submitProfile(Principal principal, @ModelAttribute UserProfile userProfile) {
+		String userName = principal.getName();
+		Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userName);
+		userProfileOptional.orElseThrow(()-> new RuntimeException("Username not found: "+userName));
+		UserProfile savedUserProfile = userProfileOptional.get();
+		userProfile.setId(savedUserProfile.getId());  // as we are not exposing ID and username in the form as we don't want users to changes their ID/userName, we need to first find IS and userName and then use it while saving so that it gets updated in DB and should not create a new record.
+		userProfile.setUserName(userName);
+		userProfileRepository.save(userProfile);
+        return "redirect:/view/"+ userName; 
+    }
 	
 	@GetMapping("/test1")
 	public String test1() {

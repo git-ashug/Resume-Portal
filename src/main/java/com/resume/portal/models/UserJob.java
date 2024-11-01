@@ -2,12 +2,9 @@ package com.resume.portal.models;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,8 +23,9 @@ public class UserJob {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate endDate;
 	private Boolean currentJob;
-	@ElementCollection(targetClass = String.class)
-	private List<String> responsibilities = new ArrayList<>();
+//	@ElementCollection(targetClass = String.class)
+//	private List<String> responsibilities = new ArrayList<>()
+	private String responsibilities;
 	
 	public int getId() {
 		return id;
@@ -65,13 +63,12 @@ public class UserJob {
 	public void setCurrentJob(Boolean currentJob) {
 		this.currentJob = currentJob;
 	}
-	public List<String> getResponsibilities() {
+	public String getResponsibilities() {
 		return responsibilities;
 	}
-	public void setResponsibilities(List<String> responsibilities) {
+	public void setResponsibilities(String responsibilities) {
 		this.responsibilities = responsibilities;
 	}
-	
 	public String getFormattedStartDate() {
 		String startDateStr = null;
 		try {

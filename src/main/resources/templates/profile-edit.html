@@ -4,11 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Resume</title>
+    <title>Resume Edit</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   </head>
   <body>
+  
+  	<div class="container my-3">
+  	<a href="/logout" type="button" class="btn btn-primary">Logout?</a>
+  	</div>
+  	
+  	<div class="container mb-3">
 	<h1 th:text="${userProfile.userName} + '\'s Edit Profile'">Profile</h1>
+	</div>
 	
 	<!-- action="#" because I don't want that by default action should work, rather Thymeleaf action should work.  -->
 	<form action="#" th:action= "@{/edit}" th:object = "${userProfile}" method="post">
@@ -18,11 +25,14 @@
 	<!-- The context of this form will be  userProfile. So its property can directly be accessed using *{property} rather than always using ${userProfile.property}-->
 	<div class="container">
 	
+	<div class="container mb-2">
 	<label class="form-label">Select the theme</label>
 	<select class="form-select" th:field="*{theme}">
     <option th:each="i : ${#numbers.sequence(1, 2)}" th:value="${i}" th:text="'Theme '+${i}"></option>
 	</select>
+	</div>
 	
+	<div class="container mb-2">
 	<h3>Profile Summary:</h3>
 		<div class="mb-3">
 		  <label class="form-label">First Name:</label>
@@ -48,9 +58,11 @@
 		  <label class="form-label">Summary:</label>
 		  <textarea class="form-control" th:field="*{summary}"></textarea>
 		</div>
-		<br>
+		</div>
+		
+		<div class="container mb-2">
 		<h3>Experience:</h3>
-		<table>
+		<table class="table table-hover table-bordered">
 		<thead>
 			<tr>
 				<th>Company Name</th>
@@ -67,20 +79,29 @@
 				<td><input type="date" class="form-control" th:field="*{jobs[__${status.index}__].startDate}"></td>
 				<td><input type="date" class="form-control" th:field="*{jobs[__${status.index}__].endDate}"></td>
 				<td><input type="checkbox" class="form-check-input" th:field="*{jobs[__${status.index}__].currentJob}"></td>
-				<td><a th:href="@{'./delete?type=experience&index=' + ${status.index}}">Delete</a></td>
+				<td><textarea class="form-control" th:field="*{jobs[__${status.index}__].responsibilities}" rows="2"></textarea></td>
+				<!-- <td><a th:href="@{'./delete?type=experience&index=' + ${status.index}}">Delete</a></td> -->
+				<td>
+						<!-- <button type="button" th:onclick="'setAction(''delete'', ''experience'', ' + ${status.index} + '); document.forms[0].submit();'">Delete</button> -->
+						<button type="button" class="btn btn-danger" th:onclick="|setAction('delete', 'experience', '${status.index}'); document.forms[0].submit();|">Delete</button>
+				</td>
 			</tr>
 		</table>
-		<p><a href="./edit?add=experience">Add Experience</a></p>
-		<br>
+		<!-- <p><a href="./edit?add=experience">Add Experience</a></p> -->
+		<!-- Solution to above <a> tag -->
+		<button type="button" class="btn btn-primary" th:onclick="|setAction('add', 'experience'); document.forms[0].submit();|">Add Experience</button>
+		</div>
 		
+		<div class="container mb-2">
 		<h3>Education:</h3>
-		<table>
+		<table class="table table-hover table-bordered">
 		<thead>
 			<tr>
 				<th>College Name</th>
 				<th>Start Date</th>
 				<th>End Date</th>
 				<th>Summary</th>
+				<th></th>
 			</tr>
 		</thead>
 			<tr th:each= "education, status : *{educations}">
@@ -89,25 +110,67 @@
 				<td><input type="date" class="form-control" th:field="*{educations[__${status.index}__].endDate}"></td>
 				<!-- <td><input type="text" class="form-control" th:field="*{educations[__${status.index}__].summary}"></td> -->
 				<td><textarea class="form-control" th:field="*{educations[__${status.index}__].summary}" rows="2"></textarea></td>
-				<td><a th:href="@{'./delete?type=education&index=' + ${status.index}}">Delete</a></td>
+				<!-- <td><a th:href="@{'./delete?type=education&index=' + ${status.index}}">Delete</a></td> -->
+				<td>
+					<button type="button" class="btn btn-danger" th:onclick="|setAction('delete', 'education', '${status.index}'); document.forms[0].submit();|">Delete</button>
+				</td>
 			</tr>
 		</table>
-		<p><a href="./edit?add=education">Add Education</a></p>
-		<br>
+		<!-- <p><a href="./edit?add=education">Add Education</a></p> -->
+		<!-- Solution to above <a> tag -->
+		<button type="button" class="btn btn-primary" th:onclick="|setAction('add', 'education'); document.forms[0].submit();|">Add Education</button>
+		</div>
 		
+		<div class="container mb-2">
 		<h3>Skills:</h3>
-		<table>
+		<table style="width:30em;" class="table table-hover table-bordered">
+		<thead>
+			<tr>
+				<th>Skill Name</th>
+				<th></th>
+			</tr>
+		</thead>
 			<tr th:each= "skill, status : *{skills}">
 				<td><input type="text" class="form-control" th:field="*{skills[__${status.index}__]}"></td>
-				<td><a th:href="@{'./delete?type=skill&index=' + ${status.index}}">Delete</a></td>
+				<!-- <td><a th:href="@{'./delete?type=skill&index=' + ${status.index}}">Delete</a></td> -->
+				<td>
+					<button type="button" class="btn btn-danger" th:onclick="|setAction('delete', 'skill', '${status.index}'); document.forms[0].submit();|">Delete</button>
+				</td>
 			</tr>
 		</table>
-		<p><a href="./edit?add=skill">Add Skill</a></p>
-		<br>
-		
-		<input type="submit">
-	</div>
+		<!-- <p><a href="./edit?add=skill">Add Skill</a></p> -->
+		<!-- Solution to above <a> tag -->
+		<button type="button" class="btn btn-primary" th:onclick="|setAction('add', 'skill'); document.forms[0].submit();|">Add Skill</button>
+		</div>
 	
+		
+		<div class="container mb-2">
+		<!-- Hidden Fields for Action and Item Type -->
+	    <input type="hidden" name="action" id="action" value=""/>
+	    <input type="hidden" name="itemType" id="itemType" value=""/>
+	    <input type="hidden" name="index" id="index" value=""/>
+	
+		<!-- Final Submit Button -->
+	 	<button type="button" class="btn btn-success" th:onclick="|setAction('submit', 'profile'); document.forms[0].submit();|">Submit Profile</button>
+	 	</div>
+	 	
+	 	</div>
 	</form>
+	
+  
+	<!-- Separate Forms for Adding Items -->
+	
+	<script>
+	    // JavaScript function to set action and itemType for add/delete actions
+	    function setAction(action, itemType, index = null) {
+	        document.getElementById("action").value = action;
+	        document.getElementById("itemType").value = itemType;
+	        document.getElementById("index").value = index !== null ? index : '';
+	        
+	        console.log("Action: " + action + ", Item Type: " + itemType + ", Index: " + index);
+	    }
+	</script>
+
+	
   </body>
 </html>

@@ -41,30 +41,40 @@ public class HomeService {
 	}
 	
 	public void addItem(UserProfile userProfile, String itemType) {
-		if("experience".equalsIgnoreCase(itemType)) {
-			userProfile.getJobs().add(new UserJob());
-		}else if("education".equalsIgnoreCase(itemType)) {
-			userProfile.getEducations().add(new UserEducation());
-		}else if("skill".equalsIgnoreCase(itemType)) {
-			userProfile.getSkills().add("");
+		switch (itemType.toLowerCase()) {
+			case "experience":
+				userProfile.getJobs().add(new UserJob());
+				break;
+			case "education":
+				userProfile.getEducations().add(new UserEducation());
+				break;
+			case "skill":
+				userProfile.getSkills().add("");
+				break;
+			default:
+				break;
 		}
 	}
 	
-	public void deleteItem(UserProfile userProfile, String itemType, Integer index) {
-		if ("experience".equals(itemType)) {
-        	userProfile.getJobs().remove((int) index);
-        }else if ("education".equals(itemType)) {
-        	userProfile.getEducations().remove((int) index);
-        }else if("skill".equalsIgnoreCase(itemType)) {
-			userProfile.getSkills().remove((int) index);
+	public void deleteItem(UserProfile userProfile, String itemType, int index) {
+		switch (itemType.toLowerCase()) {
+		case "experience":
+			userProfile.getJobs().remove(index);
+			break;
+		case "education":
+			userProfile.getEducations().remove(index);
+			break;
+		case "skill":
+			userProfile.getSkills().remove(index);
+			break;
+		default:
+			break;
 		}
 	}
 	
 	public void saveUserProfile(UserProfile userProfile) {
 		userProfileRepository.save(userProfile);
 	}
-	
-	
-	
+
 	
 }

@@ -44,15 +44,22 @@ public class HomeController {
 		UserProfile savedUserProfile = homeService.getSavedUserProfile(userName);
 		userProfile.setId(savedUserProfile.getId());  // as we are not exposing ID and username in the form as we don't want users to changes their ID/userName, we need to first find IS and userName and then use it while saving so that it gets updated in DB and should not create a new record.
 		userProfile.setUserName(userName);
-		System.out.println("Here: action = "+ action+ " ;itemType = "+itemType+ " ;index = "+ index);
-		if("add".equals(action)) {
+		
+		switch (action.toLowerCase()) {
+		case "add":
 			homeService.addItem(userProfile, itemType);
-		}else if ("delete".equals(action) && index != null) {
-			homeService.deleteItem(userProfile, itemType, index);
-        }else if("submit".equals(action)) {
-        	homeService.saveUserProfile(userProfile);
+			break;
+		case "delete":
+			if(index != null) {
+				homeService.deleteItem(userProfile, itemType, index);
+			}
+			break;
+		case "submit":
+			homeService.saveUserProfile(userProfile);
         	return "redirect:/view/"+ userName;
-        }
+		default:
+			break;
+		}
 		homeService.saveUserProfile(userProfile);
 		return "redirect:/edit";
 	}

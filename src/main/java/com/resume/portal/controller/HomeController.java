@@ -180,8 +180,10 @@ public class HomeController {
 		userJob1.setDesignation("Software Engineer 1");
 		userJob1.setStartDate(LocalDate.of(2021, 06, 14));
 		userJob1.setEndDate(LocalDate.of(2023, 06, 14));
-		userJob1.getResponsibilities().add("Feature development and prod issue fix");
-		userJob1.getResponsibilities().add("Holding brown bag sessions for team mates");
+//		userJob1.getResponsibilities().add("Feature development and prod issue fix");
+//		userJob1.getResponsibilities().add("Holding brown bag sessions for team mates");
+		userJob1.setResponsibilities("1. Feature development and prod issue fix" + "2. Holding brown bag sessions for team mates");
+		
 		UserJob userJob2 = new UserJob();
 //		userJob2.setId(2);
 		userJob2.setCompany("Google");
@@ -189,8 +191,10 @@ public class HomeController {
 		userJob2.setStartDate(LocalDate.of(2023, 06, 15));
 		userJob2.setEndDate(LocalDate.of(2040, 06, 14));
 		userJob2.setCurrentJob(true);
-		userJob2.getResponsibilities().add("Feature development and production issue fix");
-		userJob2.getResponsibilities().add("Holding brown bag sessions for team mates and juniors");
+//		userJob2.getResponsibilities().add("Feature development and production issue fix");
+//		userJob2.getResponsibilities().add("Holding brown bag sessions for team mates and juniors");
+		userJob2.setResponsibilities("1. Feature development and prod issue fix" + "2. Holding brown bag sessions for team mates");
+			
 		userProfile.setJobs(List.of(userJob1,userJob2));
 		
 		UserEducation userEd1 = new UserEducation();

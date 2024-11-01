@@ -69,18 +69,14 @@
 				<td><input type="checkbox" class="form-check-input" th:field="*{jobs[__${status.index}__].currentJob}"></td>
 				<!-- <td><a th:href="@{'./delete?type=experience&index=' + ${status.index}}">Delete</a></td> -->
 				<td>
-					<!-- <form th:action="@{/edit}" th:object = "${userProfile}" method="post" style="display: inline;"> -->
-						<button type="submit" name="action" value="delete">Delete</button>
-						<input type="hidden" name="itemType" value="experience" />
-						<input type="hidden" name="index" th:value="${status.index}" />
-					<!-- </form> -->
+						<!-- <button type="button" th:onclick="'setAction(''delete'', ''experience'', ' + ${status.index} + '); document.forms[0].submit();'">Delete</button> -->
+						<button type="button" th:onclick="|setAction('delete', 'experience', '${status.index}'); document.forms[0].submit();|">Delete</button>
 				</td>
 			</tr>
 		</table>
 		<!-- <p><a href="./edit?add=experience">Add Experience</a></p> -->
 		<!-- Solution to above <a> tag -->
-		<button type="submit" name="action" value="add">Add Experience</button>
-    	<input type="hidden" name="itemType" value="experience" />
+		<button type="button" th:onclick="|setAction('add', 'experience'); document.forms[0].submit();|">Add Experience</button>
 		<br>
 		
 		<h3>Education:</h3>
@@ -101,18 +97,13 @@
 				<td><textarea class="form-control" th:field="*{educations[__${status.index}__].summary}" rows="2"></textarea></td>
 				<!-- <td><a th:href="@{'./delete?type=education&index=' + ${status.index}}">Delete</a></td> -->
 				<td>
-					<!-- <form th:action="@{/edit}" th:object = "${userProfile}" method="post" style="display: inline;"> -->
-						<button type="submit" name="action" value="delete">Delete</button>
-						<input type="hidden" name="itemType" value="education"></input>
-						<input type="hidden" name="index" th:value="${status.index}"></input>
-					<!-- </form> -->
+					<button type="button" th:onclick="|setAction('delete', 'education', '${status.index}'); document.forms[0].submit();|">Delete</button>
 				</td>
 			</tr>
 		</table>
 		<!-- <p><a href="./edit?add=education">Add Education</a></p> -->
 		<!-- Solution to above <a> tag -->
-		<button type="submit" name="action" value="add">Add Education</button>
-    	<input type="hidden" name="itemType" value="education" />
+		<button type="button" th:onclick="|setAction('add', 'education'); document.forms[0].submit();|">Add Education</button>
 		<br>
 		
 		<h3>Skills:</h3>
@@ -121,45 +112,38 @@
 				<td><input type="text" class="form-control" th:field="*{skills[__${status.index}__]}"></td>
 				<!-- <td><a th:href="@{'./delete?type=skill&index=' + ${status.index}}">Delete</a></td> -->
 				<td>
-					<!-- <form th:action="@{/edit}" th:object = "${userProfile}" method="post" style="display: inline;"> -->
-						<button type="submit" name="action" value="delete">Delete</button>
-						<input type="hidden" name="itemType" value="skill"></input>
-						<input type="hidden" name="index" th:value="${status.index}"></input>
-					<!-- </form> -->
+					<button type="button" th:onclick="|setAction('delete', 'skill', '${status.index}'); document.forms[0].submit();|">Delete</button>
 				</td>
 			</tr>
 		</table>
 		<!-- <p><a href="./edit?add=skill">Add Skill</a></p> -->
 		<!-- Solution to above <a> tag -->
-		<button type="submit" name="action" value="add">Add Skill</button>
-    	<input type="hidden" name="itemType" value="skill" />
+		<button type="button" th:onclick="|setAction('add', 'skill'); document.forms[0].submit();|">Add Skill</button>
 		<br>
 	</div>
+		
+		<!-- Hidden Fields for Action and Item Type -->
+	    <input type="hidden" name="action" id="action" value=""/>
+	    <input type="hidden" name="itemType" id="itemType" value=""/>
+	    <input type="hidden" name="index" id="index" value=""/>
 	
 		<!-- Final Submit Button -->
-	 	<button type="submit">Submit Profile</button>
+	 	<button type="button" th:onclick="|setAction('submit', 'profile'); document.forms[0].submit();|">Submit Profile</button>
 	</form>
 	
   
 	<!-- Separate Forms for Adding Items -->
 	
-	<!-- Form for "Add Experience" -->
-	<!-- <form th:action="@{/edit}" th:object = "${userProfile}" method="post">
-	    <button type="submit" name="action" value="add">Add Experience</button>
-	    <input type="hidden" name="itemType" value="experience" />
-	</form> -->
-	
-	<!-- Form for "Add Education" -->
-	<!-- <form th:action="@{/edit}" th:object = "${userProfile}" method="post">
-	    <button type="submit" name="action" value="add">Add Education</button>
-	    <input type="hidden" name="itemType" value="education" />
-	</form> -->
-	
-	<!-- Form for "Add Skill" -->
-	<!-- <form th:action="@{/edit}" th:object = "${userProfile}" method="post">
-	    <button type="submit" name="action" value="add">Add Skill</button>
-	    <input type="hidden" name="itemType" value="skill" />
-	</form> -->
+	<script>
+	    // JavaScript function to set action and itemType for add/delete actions
+	    function setAction(action, itemType, index = null) {
+	        document.getElementById("action").value = action;
+	        document.getElementById("itemType").value = itemType;
+	        document.getElementById("index").value = index !== null ? index : '';
+	        
+	        console.log("Action: " + action + ", Item Type: " + itemType + ", Index: " + index);
+	    }
+	</script>
 
 	
   </body>

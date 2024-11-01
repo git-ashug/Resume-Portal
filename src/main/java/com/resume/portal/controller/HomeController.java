@@ -113,6 +113,9 @@ public class HomeController {
             }else if("skill".equalsIgnoreCase(itemType)) {
 				userProfile.getSkills().remove((int) index);
 			}
+        }else if("submit".equals(action)) {
+        	userProfileRepository.save(userProfile);
+        	return "redirect:/view/"+ userName;
         }
 		userProfileRepository.save(userProfile);
 		System.out.println("Saved successfully");
@@ -120,17 +123,17 @@ public class HomeController {
 		return "redirect:/edit";
 	}
 	
-	@PostMapping("/submitProfile")
-    public String submitProfile(Principal principal, @ModelAttribute UserProfile userProfile) {
-		String userName = principal.getName();
-		Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userName);
-		userProfileOptional.orElseThrow(()-> new RuntimeException("Username not found: "+userName));
-		UserProfile savedUserProfile = userProfileOptional.get();
-		userProfile.setId(savedUserProfile.getId());  // as we are not exposing ID and username in the form as we don't want users to changes their ID/userName, we need to first find IS and userName and then use it while saving so that it gets updated in DB and should not create a new record.
-		userProfile.setUserName(userName);
-		userProfileRepository.save(userProfile);
-        return "redirect:/view/"+ userName; 
-    }
+//	@PostMapping("/submitProfile")
+//    public String submitProfile(Principal principal, @ModelAttribute UserProfile userProfile) {
+//		String userName = principal.getName();
+//		Optional<UserProfile> userProfileOptional = userProfileRepository.findByUserName(userName);
+//		userProfileOptional.orElseThrow(()-> new RuntimeException("Username not found: "+userName));
+//		UserProfile savedUserProfile = userProfileOptional.get();
+//		userProfile.setId(savedUserProfile.getId());  // as we are not exposing ID and username in the form as we don't want users to changes their ID/userName, we need to first find IS and userName and then use it while saving so that it gets updated in DB and should not create a new record.
+//		userProfile.setUserName(userName);
+//		userProfileRepository.save(userProfile);
+//        return "redirect:/view/"+ userName; 
+//    }
 	
 	@GetMapping("/test1")
 	public String test1() {
